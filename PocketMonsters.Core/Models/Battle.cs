@@ -1,5 +1,4 @@
 using PocketMonsters.Core.Enums;
-using PocketMonsters.Core.Interfaces;
 
 namespace PocketMonsters.Core.Models
 {
@@ -10,25 +9,16 @@ namespace PocketMonsters.Core.Models
 
         public int Turn { get; set; }
 
-        // Use Item
-        // - Has Target
-        // Attack
-        // - Has Target
-        // Use ability
-        // - Has Target
-        // Swap Monster
-        // Waits/ Skip turn
-        // Attempt to run away
-
         public void Attack(Character source, Character target, MoveType moveType)
         {
-            // Basic Pokemon damage calculation logic:
-            // damage = ((2 * level / 5) + 2) * movePower * (attackStat/ defenseStat) * modifier
-            // Calculate Damage
             var move = Move.Moves[moveType];
-            var damage = ((2 * source.EquippedMonster.Level / 5) + 2) * move.Power * GetAttackStat(source, target);
+            var levelDamage = (2 * source.EquippedMonster.Level * GetCritical() / 5) + 2;
+            var numerator = levelDamage * move.Power * GetAttackStat(source, target);
+            var damage = (numerator / 50) + 2;
 
-            target.EquippedMonster.Health -= damage;
+            damage *= Maths.RandomRange(0.85f, 1.0f);
+
+            target.EquippedMonster.Stats.Health -= damage;
         }
 
         public void UseItem(Character source, Character target, Item item)
@@ -50,6 +40,7 @@ namespace PocketMonsters.Core.Models
             // TODO: Add run away logic
         }
 
+        [Obsolete("Bullshit code!")]
         private float GetAttackStat(Character source, Character target)
         {
             var sourceBeastiaryItem = Beastiary.Instance[source.EquippedMonster.Type];
@@ -67,6 +58,19 @@ namespace PocketMonsters.Core.Models
                 defenseMultiplier *= ElementMatrix.Instance[targetElement, sourceElement];
 
             return attackMultiplier / defenseMultiplier;
+        }
+
+        private int GetCritical()
+        {
+            Random random = new Random();
+        
+            int minValue = 0;
+            int maxValue = 255;
+            
+            int value = random.Next(minValue, maxValue);
+            int threshhold = random.Next(minValue, maxValue);
+            
+            return value > threshhold ? 2 : 1;
         }
     }
 }

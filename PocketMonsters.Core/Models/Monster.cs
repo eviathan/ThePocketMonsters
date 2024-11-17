@@ -1,18 +1,25 @@
 using PocketMonsters.Core.Enums;
-using PocketMonsters.Core.Interfaces;
 
 namespace PocketMonsters.Core.Models
 {
     public class Monster
     {
-        public string Name { get; set; }
-        public MonsterType Type { get; set; }
-        public byte Level { get; set; } = 1;
-        public float Health { get; set; } = 100;
-        public int PowerPoints { get; set; }
-        public int ExperiencePoints { get; set; }
-
-        public List<Modifier<Monster>> Modifiers { get; set; }
-        public Dictionary<byte, MonsterType> Evolutions { get; set; } = [];
+        public string Name { get; private set; }
+        public MonsterType Type { get; private set; }
+        public byte Level { get; set; }
+        public int ExperiencePoints { get; private set; }
+        public MonsterStats Stats { get; private set; }
+        public List<Move> MoveSet { get; private set; }
+        public List<Modifier<Monster>> Modifiers { get; private set; }
+        
+        public Monster(string name, MonsterType type, byte level = 1, MonsterStats? stats = null, List<Move> moveSet = null, List<Modifier<Monster>> modifiers = null)
+        {
+            Name = name;
+            Type = type;
+            Level = level;
+            Stats = stats ?? Beastiary.Instance[Type].BaseStats;
+            MoveSet = moveSet ?? [];
+            Modifiers = modifiers ?? [];
+        }
     }
 }

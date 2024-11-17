@@ -25,7 +25,7 @@ namespace PocketMonsters.Core.Models
                 {
                     Type = MoveType.FagBurn,
                     Element = ElementType.Fire,
-                    Category = CategoryType.Physical,
+                    Category = CategoryType.Special,
                     Power = 90,
                     Accuracy = 100,
                     PowerPoints = 10,

@@ -14,7 +14,7 @@ namespace PocketMonsters.Core.Models
                 Type = ItemType.Potion,
                 UseItem = (monster) =>
                 {
-                    monster.Health += 20;
+                    monster.Stats.Health += 20;
                 }
             },
             [ItemType.RareCandy] = new Item

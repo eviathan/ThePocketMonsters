@@ -4,9 +4,11 @@ namespace PocketMonsters.Core.Models
 {
     public class BeastiaryItem
     {
+        public MonsterStats BaseStats { get; set; }
         public string Description { get; set; }
         public HashSet<ElementType> Elements { get; set; } = [];
-        public List<Move> MoveSet { get; set; } = [];
+        public List<Move> BaseMoveSet { get; set; } = [];
+        public Dictionary<byte, MonsterType> Evolutions { get; set; } = [];
     }
 
     public class Beastiary
@@ -36,12 +38,21 @@ namespace PocketMonsters.Core.Models
             {
                 MonsterType.Venusaur, new BeastiaryItem
                 {
+                    BaseStats = new ()
+                    {
+                        Health = 78,
+                        Attack = 84,
+                        Defense = 78,
+                        SpecialAttack = 109,
+                        SpecialDefence = 85,
+                        Speed = 100
+                    },
                     Description = "I love running through fields of wheat!",
                     Elements =
                     [
                         ElementType.Grass
                     ],
-                    MoveSet =
+                    BaseMoveSet =
                     [
 
                     ]
@@ -52,6 +63,15 @@ namespace PocketMonsters.Core.Models
             {
                 MonsterType.Charizard, new BeastiaryItem
                 {
+                    BaseStats = new ()
+                    {
+                        Health = 80,
+                        Attack = 82,
+                        Defense = 83,
+                        SpecialAttack = 100,
+                        SpecialDefence = 100,
+                        Speed = 80
+                    },
                     Description = "Hes a big burny bastard!",
                     Elements =
                     [
