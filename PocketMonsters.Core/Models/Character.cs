@@ -1,4 +1,5 @@
-using PocketMonsters.Core.Interfaces;
+using PocketMonsters.Core.Enums;
+using PocketMonsters.Core.Models;
 
 namespace PocketMonsters.Core.Models
 {
@@ -6,7 +7,22 @@ namespace PocketMonsters.Core.Models
     {
         public string Name { get; protected set; }
 
-        public List<IItem> Items { get; set; } = [];
+        public Monster EquippedMonster { get; private set; }
+
         public List<Monster> Monsters { get; set; } = [];
+
+        public List<Item> Items { get; set; } = [];
+
+        public bool TrySwapMonster(MonsterType monsterType)
+        {
+            var monster = Monsters.FirstOrDefault(m => m.Type == monsterType);
+            if (monster != null)
+            {
+                EquippedMonster = monster;
+                return true;
+            }
+
+            return false;
+        }
     }
 }

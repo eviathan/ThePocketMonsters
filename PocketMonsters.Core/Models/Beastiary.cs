@@ -5,16 +5,29 @@ namespace PocketMonsters.Core.Models
     public class BeastiaryItem
     {
         public string Description { get; set; }
-        public HashSet<ElementType> Elements { get; set; }
+        public HashSet<ElementType> Elements { get; set; } = [];
+        public List<Move> MoveSet { get; set; } = [];
     }
 
     public class Beastiary
     {
+        private static readonly Beastiary _instance = new Beastiary();
+        public static Beastiary Instance
+        {
+            get
+            {
+                return _instance;
+            }
+        }
+
         public BeastiaryItem this[MonsterType type]
         {
             get => _items[type];
             set => _items[type] = value;
         }
+
+        static Beastiary() { }
+        private Beastiary() { }
 
         private Dictionary<MonsterType, BeastiaryItem> _items { get; set; } = new Dictionary<MonsterType, BeastiaryItem>
         {
@@ -27,6 +40,10 @@ namespace PocketMonsters.Core.Models
                     Elements =
                     [
                         ElementType.Grass
+                    ],
+                    MoveSet =
+                    [
+
                     ]
                 }
             },
