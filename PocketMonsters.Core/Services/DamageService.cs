@@ -1,7 +1,7 @@
 using PocketMonsters.Core.Enums;
 using PocketMonsters.Core.Models;
 
-namespace PocketMonsters.Core
+namespace PocketMonsters.Core.Service
 {
     public static class DamageService
     {

@@ -40,3 +40,14 @@ battle.Attack((characters, moveTypes) =>  {
     };
 });
 Console.WriteLine($"{monsterA.Name} Health: {ash.EquippedMonster.Stats.Health}");
+
+battle.RunAway(
+    (character) => 
+    {
+        Console.WriteLine($"{character.Name} ran Away!");
+    },
+    (character) => 
+    {
+        Console.WriteLine($"{character.Name} failed to run Away!");
+    }
+);
