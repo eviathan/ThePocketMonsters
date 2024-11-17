@@ -13,7 +13,14 @@
             "args": [],
             "cwd": "${workspaceFolder}/PocketMonsters.App",
             "console": "internalConsole",
-            "stopAtEntry": false
+            "stopAtEntry": false,
+            "logging": {
+                "diagnosticsLog": {
+                    "protocolMessages": false
+                },
+                "moduleLoad": false,
+                "programOutput": true
+            }
         },
         {
             "name": ".NET Core Attach",

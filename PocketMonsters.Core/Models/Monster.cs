@@ -18,7 +18,7 @@ namespace PocketMonsters.Core.Models
             Type = type;
             Level = level;
             Stats = stats ?? Beastiary.Instance[Type].BaseStats;
-            MoveSet = moveSet ?? [];
+            MoveSet = moveSet ?? Beastiary.Instance[Type].BaseMoveSet;
             Modifiers = modifiers ?? [];
         }
     }

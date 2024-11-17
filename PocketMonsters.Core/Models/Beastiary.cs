@@ -54,7 +54,7 @@ namespace PocketMonsters.Core.Models
                     ],
                     BaseMoveSet =
                     [
-
+                        Move.Moves[MoveType.WoodHammer]
                     ]
                 }
             },
@@ -77,6 +77,10 @@ namespace PocketMonsters.Core.Models
                     [
                         ElementType.Fire,
                         ElementType.Flying,
+                    ],
+                    BaseMoveSet =
+                    [
+                        Move.Moves[MoveType.FagBurn]
                     ]
                 }
             },

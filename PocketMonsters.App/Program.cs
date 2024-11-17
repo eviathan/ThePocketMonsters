@@ -19,15 +19,24 @@ var monsterB = new Monster
 minglePooper.Monsters.Add(monsterB);
 minglePooper.TrySwapMonster(MonsterType.Venusaur);
 
-var battle = new Battle();
-
-battle.Allies.Add(ash);
-battle.Enemies.Add(minglePooper);
+var battle = new Battle([ash], [minglePooper]);
 
 Console.WriteLine($"{monsterB.Name} Health: {minglePooper.EquippedMonster.Stats.Health}");
-battle.Attack(ash, minglePooper, MoveType.FagBurn);
+battle.Attack((characters, moveTypes) =>  {
+    return new AttackTurn
+    {
+        Target = characters.First(),
+        MoveType = moveTypes.First()
+    };
+});
 Console.WriteLine($"{monsterB.Name} Health: {minglePooper.EquippedMonster.Stats.Health}");
 
 Console.WriteLine($"{monsterA.Name} Health: {ash.EquippedMonster.Stats.Health}");
-battle.Attack(minglePooper, ash, MoveType.WoodHammer);
+battle.Attack((characters, moveTypes) =>  {
+    return new AttackTurn
+    {
+        Target = characters.First(),
+        MoveType = moveTypes.First()
+    };
+});
 Console.WriteLine($"{monsterA.Name} Health: {ash.EquippedMonster.Stats.Health}");

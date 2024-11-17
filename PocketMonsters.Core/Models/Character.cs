@@ -24,5 +24,13 @@ namespace PocketMonsters.Core.Models
 
             return false;
         }
+
+        public void SwapMonster(MonsterType monsterType)
+        {
+            if (!TrySwapMonster(monsterType))
+            {
+                throw new ArgumentOutOfRangeException($"Character does not have a {monsterType} monster!");
+            }
+        }
     }
 }
