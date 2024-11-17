@@ -1,5 +1,4 @@
 using PocketMonsters.Core.Enums;
-using PocketMonsters.Core.Interfaces;
 
 namespace PocketMonsters.Core.Models
 {

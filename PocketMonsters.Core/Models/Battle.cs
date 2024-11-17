@@ -9,16 +9,20 @@ namespace PocketMonsters.Core.Models
 
         public int Turn { get; set; }
 
-        public void Attack(Character source, Character target, MoveType moveType)
+        public void Attack(Character attacker, Character defender, MoveType moveType)
         {
+            var attackingMonster = attacker.EquippedMonster;
+            var defendingMonster = defender.EquippedMonster;
             var move = Move.Moves[moveType];
-            var levelDamage = (2 * source.EquippedMonster.Level * GetCritical() / 5) + 2;
-            var numerator = levelDamage * move.Power * GetAttackStat(source, target);
-            var damage = (numerator / 50) + 2;
 
-            damage *= Maths.RandomRange(0.85f, 1.0f);
+            var levelDamage = (2 * attackingMonster.Level * CalculateCritical() / 5) + 2;
+            var attackAndDefense = CalculateAttackStat(attackingMonster.Stats, move.Category) / CalculateDefenseStat(defendingMonster.Stats, move.Category);
+            var numerator = levelDamage * move.Power * attackAndDefense;
+            var damage = ((numerator / 50) + 2) * CalculateSTAB(attackingMonster, move) * CalculateTypeEffectiveness(move, defendingMonster);
 
-            target.EquippedMonster.Stats.Health -= damage;
+            damage = (int)(damage * Maths.RandomRange(0.85f, 1.0f));
+
+            defender.EquippedMonster.Stats.Health -= (int)damage;
         }
 
         public void UseItem(Character source, Character target, Item item)
@@ -40,27 +44,7 @@ namespace PocketMonsters.Core.Models
             // TODO: Add run away logic
         }
 
-        [Obsolete("Bullshit code!")]
-        private float GetAttackStat(Character source, Character target)
-        {
-            var sourceBeastiaryItem = Beastiary.Instance[source.EquippedMonster.Type];
-            var targetBeastiaryItem = Beastiary.Instance[target.EquippedMonster.Type];
-
-            float attackMultiplier = 1.0f;
-            float defenseMultiplier = 1.0f;
-            
-            foreach (var sourceElement in sourceBeastiaryItem.Elements)
-            foreach (var targetElement in targetBeastiaryItem.Elements)
-                attackMultiplier *= ElementMatrix.Instance[sourceElement, targetElement];
-
-            foreach (var targetElement in targetBeastiaryItem.Elements)
-            foreach (var sourceElement in sourceBeastiaryItem.Elements)
-                defenseMultiplier *= ElementMatrix.Instance[targetElement, sourceElement];
-
-            return attackMultiplier / defenseMultiplier;
-        }
-
-        private int GetCritical()
+        private int CalculateCritical()
         {
             Random random = new Random();
         
@@ -71,6 +55,57 @@ namespace PocketMonsters.Core.Models
             int threshhold = random.Next(minValue, maxValue);
             
             return value > threshhold ? 2 : 1;
+        }
+
+        private int CalculateAttackStat(MonsterStats stats, CategoryType categoryType)
+        {
+            switch (categoryType)
+            {
+                case CategoryType.Physical:
+                    return stats.Attack;
+                case CategoryType.Special:
+                    return stats.SpecialAttack;
+                default:
+                    throw new ArgumentOutOfRangeException($"{categoryType} is not a supported Attack Stat!");
+            }
+        }
+
+        private int CalculateDefenseStat(MonsterStats stats, CategoryType categoryType)
+        {
+            switch (categoryType)
+            {
+                case CategoryType.Physical:
+                    return stats.Defense;
+                case CategoryType.Special:
+                    return stats.SpecialDefence;
+                default:
+                    throw new ArgumentOutOfRangeException($"{categoryType} is not a supported Defense Stat!");
+            }
+        }
+
+        private float CalculateSTAB(Monster monster, Move move)
+        {
+            var beastiaryItem = Beastiary.Instance[monster.Type];
+            var monsterElementTypes = beastiaryItem.Elements;
+            
+            var isMoveSameElementType = monsterElementTypes.Contains(move.Element);
+            return isMoveSameElementType ? 1.5f : 1f;
+        }
+
+        private float CalculateTypeEffectiveness(Move move, Monster defender)
+        {
+            var aggregateEffectiveness = 1.0f;
+
+            var beastiaryItem = Beastiary.Instance[defender.Type];
+
+            foreach (var element in beastiaryItem.Elements)
+            {
+                var effectivness = ElementMatrix.Instance[move.Element, element];
+                
+                aggregateEffectiveness *= effectivness;
+            }
+
+            return aggregateEffectiveness;
         }
     }
 }

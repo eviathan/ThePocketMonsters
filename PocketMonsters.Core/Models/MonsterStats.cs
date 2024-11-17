@@ -2,7 +2,7 @@ namespace PocketMonsters.Core.Models
 {
     public class MonsterStats
     {
-        public float Health { get; set; } = 100;        
+        public int Health { get; set; } = 100;        
         public int Attack { get; set; }
         public int Defense { get; set; }
         public int SpecialAttack { get; set; }

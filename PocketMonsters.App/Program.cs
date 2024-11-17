@@ -24,10 +24,10 @@ var battle = new Battle();
 battle.Allies.Add(ash);
 battle.Enemies.Add(minglePooper);
 
-Console.WriteLine($"{minglePooper.Name} Health: {minglePooper.EquippedMonster.Stats.Health}");
+Console.WriteLine($"{monsterB.Name} Health: {minglePooper.EquippedMonster.Stats.Health}");
 battle.Attack(ash, minglePooper, MoveType.FagBurn);
-Console.WriteLine($"{minglePooper.Name} Health: {minglePooper.EquippedMonster.Stats.Health}");
+Console.WriteLine($"{monsterB.Name} Health: {minglePooper.EquippedMonster.Stats.Health}");
 
-Console.WriteLine($"{ash.Name} Health: {ash.EquippedMonster.Stats.Health}");
+Console.WriteLine($"{monsterA.Name} Health: {ash.EquippedMonster.Stats.Health}");
 battle.Attack(minglePooper, ash, MoveType.WoodHammer);
-Console.WriteLine($"{ash.Name} Health: {ash.EquippedMonster.Stats.Health}");
+Console.WriteLine($"{monsterA.Name} Health: {ash.EquippedMonster.Stats.Health}");
