@@ -11,6 +11,9 @@ namespace PocketMonsters.Core.Service
             var defendingMonster = defender.EquippedMonster;
             var move = Move.Moves[moveType];
 
+            ApplyModifiers(attackingMonster);
+            ApplyModifiers(defendingMonster);
+
             var levelDamage = (2 * attackingMonster.Level * CalculateCritical() / 5) + 2;
             var attackAndDefense = CalculateAttackStat(attackingMonster.Stats, move.Category) / CalculateDefenseStat(defendingMonster.Stats, move.Category);
             var numerator = levelDamage * move.Power * attackAndDefense;
@@ -19,6 +22,22 @@ namespace PocketMonsters.Core.Service
             damage = (int)(damage * Maths.RandomRange(0.85f, 1.0f));
 
             return (int)damage;
+        }
+
+        private static void ApplyModifiers(Monster monster)
+        {
+            var predicate = (Monster monster) => 
+            {
+
+            };
+
+            foreach (var modifier in monster.Modifiers)
+            {
+                if(modifier.TryModify(monster, predicate))
+                {
+                    // TODO: DO THE THING HERE
+                }
+            }
         }
 
         private static int CalculateCritical()

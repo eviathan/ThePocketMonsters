@@ -21,33 +21,38 @@ minglePooper.TrySwapMonster(MonsterType.Venusaur);
 
 var battle = new Battle([ash], [minglePooper]);
 
-Console.WriteLine($"{monsterB.Name} Health: {minglePooper.EquippedMonster.Stats.Health}");
-battle.Attack((characters, moveTypes) =>  {
-    return new AttackTurn
-    {
-        Target = characters.First(),
-        MoveType = moveTypes.First()
-    };
-});
-Console.WriteLine($"{monsterB.Name} Health: {minglePooper.EquippedMonster.Stats.Health}");
+while(true)
+{
+    Character targetCharacter = null;
 
-Console.WriteLine($"{monsterA.Name} Health: {ash.EquippedMonster.Stats.Health}");
-battle.Attack((characters, moveTypes) =>  {
-    return new AttackTurn
-    {
-        Target = characters.First(),
-        MoveType = moveTypes.First()
-    };
-});
-Console.WriteLine($"{monsterA.Name} Health: {ash.EquippedMonster.Stats.Health}");
+    battle.Attack((characters, moveTypes) =>  {
+        targetCharacter = characters.First();
+        Console.WriteLine($"{characters.First().Name} - {targetCharacter.EquippedMonster.Name} was attacked with: {moveTypes.First()}");
+        return new AttackTurn
+        {
+            Target = characters.First(),
+            MoveType = moveTypes.First()
+        };
+    });
 
-battle.RunAway(
-    (character) => 
+    var equipedMonster = targetCharacter.EquippedMonster;
+    Console.WriteLine($"{equipedMonster.Name} Health: {equipedMonster.Stats.Health}");
+
+    if(battle.State != BattleState.Active)
     {
-        Console.WriteLine($"{character.Name} ran Away!");
-    },
-    (character) => 
-    {
-        Console.WriteLine($"{character.Name} failed to run Away!");
+        switch (battle.State)
+        {
+            case BattleState.Won:
+                Console.WriteLine("Won!");
+                break;
+            case BattleState.Draw:
+                Console.WriteLine("Draw!");
+                break;
+            case BattleState.Lost:
+                Console.WriteLine("Lost!");
+                break;
+        }
+
+        break;
     }
-);
+}

@@ -1,4 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
 using PocketMonsters.Core.Enums;
 using PocketMonsters.Core.Extensions;
 using PocketMonsters.Core.Service;
@@ -22,21 +21,19 @@ namespace PocketMonsters.Core.Models
         private readonly List<Character> _interlleavedCharacters;
         private readonly Action<BattleState, BattleStats>? _onBattleDidEnd;
 
-        public Battle(
-            List<Character> allies,
-            List<Character> enemies, 
-            Action<BattleState, BattleStats>? onBattleDidEnd = null)
+        public Battle(List<Character> allies, List<Character> enemies, Action<BattleState, BattleStats>? onBattleDidEnd = null)
         {
             Allies = allies ?? throw new ArgumentNullException(nameof(allies));
             Enemies = enemies ?? throw new ArgumentNullException(nameof(enemies));
-            _onBattleDidEnd = onBattleDidEnd;
-
             _interlleavedCharacters = allies.InterleaveRandom(enemies);
+            _onBattleDidEnd = onBattleDidEnd;
         }
 
         public void Attack(Func<List<Character>, HashSet<MoveType>, AttackTurn> predicate)
         {
-            var targetCharacters = Enemies;
+            var targetIsEnemies = Allies.Contains(CurrentCharacter); 
+            var targetCharacters = targetIsEnemies ? Enemies : Allies;
+
             var attackTurnResult = predicate
             (
                 targetCharacters,
@@ -96,6 +93,16 @@ namespace PocketMonsters.Core.Models
 
         private void EvaluateState()
         {
+            var enemiesSurvived = CheckIfSurvived(Enemies);
+            var alliesSurvived = CheckIfSurvived(Allies);
+
+            if(!enemiesSurvived)
+                State = BattleState.Won;
+            else if(!alliesSurvived)
+                State = BattleState.Lost;
+            else if (!enemiesSurvived && !alliesSurvived)
+                State = BattleState.Draw;
+
             switch (State)
             {
                 default:
@@ -104,10 +111,18 @@ namespace PocketMonsters.Core.Models
                     break;
                 case BattleState.Won:
                 case BattleState.Lost:
+                case BattleState.Draw:
                 case BattleState.Escaped:
                     _onBattleDidEnd?.Invoke(State, new BattleStats { });    
                     break;
             }
+        }
+
+        private bool CheckIfSurvived(IEnumerable<Character> characters)
+        {
+            return characters
+                .SelectMany(character => character.Monsters)
+                .Any(monster => monster.Stats.Health > 0);
         }
     }
 }

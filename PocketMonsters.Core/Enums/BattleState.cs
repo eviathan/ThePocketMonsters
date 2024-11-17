@@ -5,6 +5,7 @@ namespace PocketMonsters.Core.Enums
         Active,
         Won,
         Lost,
-        Escaped
+        Escaped,
+        Draw
     }
 }
