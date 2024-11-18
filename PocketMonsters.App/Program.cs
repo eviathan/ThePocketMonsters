@@ -19,40 +19,53 @@ var monsterB = new Monster
 minglePooper.Monsters.Add(monsterB);
 minglePooper.TrySwapMonster(MonsterType.Venusaur);
 
-var battle = new Battle([ash], [minglePooper]);
-
-while(true)
-{
-    Character targetCharacter = null;
-
-    battle.Attack((characters, moveTypes) =>  {
-        targetCharacter = characters.First();
-        Console.WriteLine($"{characters.First().Name} - {targetCharacter.EquippedMonster.Name} was attacked with: {moveTypes.First()}");
-        return new AttackTurn
-        {
-            Target = characters.First(),
-            MoveType = moveTypes.First()
-        };
-    });
-
-    var equipedMonster = targetCharacter.EquippedMonster;
-    Console.WriteLine($"{equipedMonster.Name} Health: {equipedMonster.Stats.Health}");
-
-    if(battle.State != BattleState.Active)
+var battle = new Battle(
+    [ ash ],
+    [ minglePooper ],
+    (state, stats) =>
     {
-        switch (battle.State)
+        switch (state)
         {
             case BattleState.Won:
-                Console.WriteLine("Won!");
+                Console.WriteLine($"Won! Winners: {string.Join(", ", stats.Winners.Select(x => x.Name))}");
                 break;
             case BattleState.Draw:
-                Console.WriteLine("Draw!");
+                Console.WriteLine($"Draw! Winners: {string.Join(", ", stats.Winners.Select(x => x.Name))}");
                 break;
             case BattleState.Lost:
-                Console.WriteLine("Lost!");
+                Console.WriteLine($"Lost! Winners: {string.Join(", ", stats.Winners.Select(x => x.Name))}");
                 break;
         }
-
-        break;
     }
-}
+);
+
+// while(true)
+// {
+//     Character targetCharacter = null;
+
+//     battle.Attack((characters, moveTypes) =>  {
+//         targetCharacter = characters.First();
+//         Console.WriteLine($"{characters.First().Name} - {targetCharacter.EquippedMonster.Name} was attacked with: {moveTypes.First()}");
+//         return new AttackTurn
+//         {
+//             Target = characters.First(),
+//             MoveType = moveTypes.First()
+//         };
+//     });
+
+//     var equipedMonster = targetCharacter.EquippedMonster;
+//     Console.WriteLine($"{equipedMonster.Name} Health: {equipedMonster.Stats.Health}");
+
+//     if(battle.State != BattleState.Active)
+//         break;
+// }
+
+ash.Satchel.TryAdd(ItemType.RareCandy, 12);
+minglePooper.Satchel.TryAdd(ItemType.RareCandy, 12);
+
+
+Console.WriteLine($"Swags level is: {ash.EquippedMonster.Level}");
+battle.UseItem(ash, (items) => {
+    return items.First();
+});
+Console.WriteLine($"Swags level is: {ash.EquippedMonster.Level}");

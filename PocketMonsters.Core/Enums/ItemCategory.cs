@@ -7,7 +7,7 @@ namespace PocketMonsters.Core.Enums
         Books = 2, // pokemon Machines
         Potions = 3, // pokemon Medicines
         BeastOrb = 4,
-        // Berry = 2, // pokemon Berrys
+        Snack = 3, // pokemon Berrys
         Unknown = 99
     }   
 }

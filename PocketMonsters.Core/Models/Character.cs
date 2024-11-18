@@ -11,8 +11,8 @@ namespace PocketMonsters.Core.Models
 
         public List<Monster> Monsters { get; set; } = [];
 
-        public List<Item> Items { get; set; } = [];
-
+        public Satchel Satchel { get; set; } = new ();
+ 
         public bool TrySwapMonster(MonsterType monsterType)
         {
             var monster = Monsters.FirstOrDefault(m => m.Type == monsterType);

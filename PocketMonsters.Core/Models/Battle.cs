@@ -46,10 +46,13 @@ namespace PocketMonsters.Core.Models
             EvaluateState();
         }
 
-        public void UseItem(Character target, Item item)
+        public void UseItem(Character target, Func<IEnumerable<ItemType>, ItemType> predicate)
         {
-            throw new NotImplementedException("Not implemented yet!");
-            // EvaluateState();
+            var itemType = predicate(CurrentCharacter.Satchel.GetAvaliableItemTypes() ?? []);
+            var item = Catalog.Instance[itemType];
+            item.UseItem(target.EquippedMonster);
+            
+            EvaluateState();
         }
 
         public void ChangeMonster(Func<List<MonsterType>, MonsterType> predicate)
@@ -74,7 +77,6 @@ namespace PocketMonsters.Core.Models
                 .FirstOrDefault();
 
             var equippedMonsterSpeed = CurrentCharacter.EquippedMonster.Stats.Speed;
-
             var escapeChance = (equippedMonsterSpeed * 32 / enemyMaxSpeed) + 30;
             var escapeThreshold = Maths.RandomRange(0, 225);
 
@@ -96,12 +98,23 @@ namespace PocketMonsters.Core.Models
             var enemiesSurvived = CheckIfSurvived(Enemies);
             var alliesSurvived = CheckIfSurvived(Allies);
 
+            List<Character> winners = [];
+
             if(!enemiesSurvived)
+            {
+                winners = Allies;
                 State = BattleState.Won;
+            }
             else if(!alliesSurvived)
+            {
+                winners = Enemies;
                 State = BattleState.Lost;
+            }
             else if (!enemiesSurvived && !alliesSurvived)
+            {
+                winners = Allies.Concat(Enemies).ToList();
                 State = BattleState.Draw;
+            }
 
             switch (State)
             {
@@ -113,7 +126,10 @@ namespace PocketMonsters.Core.Models
                 case BattleState.Lost:
                 case BattleState.Draw:
                 case BattleState.Escaped:
-                    _onBattleDidEnd?.Invoke(State, new BattleStats { });    
+                    _onBattleDidEnd?.Invoke(State, new BattleStats 
+                    { 
+                        Winners = winners
+                    });    
                     break;
             }
         }

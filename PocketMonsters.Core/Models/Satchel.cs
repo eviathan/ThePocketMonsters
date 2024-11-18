@@ -6,37 +6,52 @@ namespace PocketMonsters.Core.Models
     {
         private Dictionary<ItemType, int> _items { get; set; } = [];
 
-        private Dictionary<ItemType, Item> _itemMap { get; set; } = new()
+        public HashSet<ItemType> GetAvaliableItemTypes()
         {
-            [ItemType.Potion] = new Item
-            {
-                Type = ItemType.Potion,
-                UseItem = (monster) =>
-                {
-                    monster.Stats.Health += 20;
-                }
-            },
-            [ItemType.RareCandy] = new Item
-            {
-                Type = ItemType.RareCandy,
-                UseItem = (monster) =>
-                {
-                    monster.Level++;
-                }
-            },
-        };
+            return _items
+                .Where(item => item.Value > 0)
+                .Select(item => item.Key)
+                .ToHashSet();
+        }
 
-        public bool TryUse(ItemType itemType, out Item item)
+        public bool TryUse(ItemType itemType, int amount = 1)
         {
-            item = null;
-
+            // TODO: Handle amount 
             if (_items.ContainsKey(itemType) && _items[itemType] > 0)
             {
-                item = _itemMap[itemType];
                 _items[itemType]--;
             }
 
             return false;
+        }
+
+        public bool TryAdd(ItemType itemType, int amount = 1)
+        {
+            if (!_items.ContainsKey(itemType))
+            {
+                _items[itemType] = amount;
+                return true;
+            }
+
+            var currentAmount = _items[itemType];
+            var amountOfSpaces = int.MaxValue - currentAmount;
+            
+            if(amountOfSpaces >= amount)
+            {
+                _items[itemType] += amount;
+            }
+            else 
+            {
+                for (int i = 0; i < amount; i++)
+                {
+                    _items[itemType] += amount;
+                    
+                    if(_items[itemType] == int.MaxValue)
+                        return false;
+                }
+            }
+
+            return true;
         }
     }
 }
