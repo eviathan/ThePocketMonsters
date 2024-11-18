@@ -9,10 +9,10 @@ namespace PocketMonsters.Core.Models
         public byte Level { get; set; }
         public int ExperiencePoints { get; private set; }
         public MonsterStats Stats { get; private set; }
-        public List<Move> MoveSet { get; private set; }
+        public List<MoveType> MoveSet { get; private set; }
         public List<Modifier<Monster>> Modifiers { get; private set; }
         
-        public Monster(string name, MonsterType type, byte level = 1, MonsterStats? stats = null, List<Move> moveSet = null, List<Modifier<Monster>> modifiers = null)
+        public Monster(string name, MonsterType type, byte level = 1, MonsterStats? stats = null, List<MoveType> moveSet = null, List<Modifier<Monster>> modifiers = null)
         {
             Name = name;
             Type = type;

@@ -5,7 +5,6 @@ namespace PocketMonsters.Core.Models
     public class Catalog
     {
         public static Catalog Instance = new();
-        
         private Catalog() { }
         static Catalog() { }
 
@@ -14,7 +13,6 @@ namespace PocketMonsters.Core.Models
             get => _items.ContainsKey(type) ? _items[type] : null;
             set => _items[type] = value;
         }
-
 
         private Dictionary<ItemType, Item> _items { get; set; } = new()
         {
@@ -32,6 +30,14 @@ namespace PocketMonsters.Core.Models
                 UseItem = (monster) =>
                 {
                     monster.Level++;
+                }
+            },
+            [ItemType.BookTheOldDickTwist] = new Item
+            {
+                Type = ItemType.BookTheOldDickTwist,
+                UseItem = (monster) =>
+                {
+                    monster.MoveSet.Add(MoveType.TheOldDickTwist);
                 }
             },
         };

@@ -60,12 +60,21 @@ var battle = new Battle(
 //         break;
 // }
 
-ash.Satchel.TryAdd(ItemType.RareCandy, 12);
-minglePooper.Satchel.TryAdd(ItemType.RareCandy, 12);
+// ash.Satchel.TryAdd(ItemType.RareCandy, 12);
+// minglePooper.Satchel.TryAdd(ItemType.RareCandy, 12);
 
 
-Console.WriteLine($"Swags level is: {ash.EquippedMonster.Level}");
-battle.UseItem(ash, (items) => {
-    return items.First();
-});
-Console.WriteLine($"Swags level is: {ash.EquippedMonster.Level}");
+// Console.WriteLine($"Swags level is: {ash.EquippedMonster.Level}");
+// battle.UseItem(ash, (items) => {
+//     return items.First();
+// });
+// Console.WriteLine($"Swags level is: {ash.EquippedMonster.Level}");
+
+
+Console.WriteLine(string.Join(", ", ash.EquippedMonster.MoveSet.Select(x => x)));
+
+ash.Satchel.TryAdd(ItemType.BookTheOldDickTwist, 1);
+
+ash.Satchel.TryUse(ItemType.BookTheOldDickTwist, ash.EquippedMonster);
+
+Console.WriteLine(string.Join(", ", ash.EquippedMonster.MoveSet.Select(x => x)));

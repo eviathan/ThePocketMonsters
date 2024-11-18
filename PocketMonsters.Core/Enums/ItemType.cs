@@ -3,6 +3,7 @@ namespace PocketMonsters.Core.Enums
     public enum ItemType
     {
         Potion,
-        RareCandy
+        RareCandy,
+        BookTheOldDickTwist
     }
 }

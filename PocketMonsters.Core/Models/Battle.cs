@@ -37,7 +37,7 @@ namespace PocketMonsters.Core.Models
             var attackTurnResult = predicate
             (
                 targetCharacters,
-                CurrentCharacter.EquippedMonster.MoveSet.Select(move => move.Type).ToHashSet()
+                CurrentCharacter.EquippedMonster.MoveSet.ToHashSet()
             );
 
             attackTurnResult.Target.EquippedMonster.Stats.Health -= 
@@ -51,7 +51,7 @@ namespace PocketMonsters.Core.Models
             var itemType = predicate(CurrentCharacter.Satchel.GetAvaliableItemTypes() ?? []);
             var item = Catalog.Instance[itemType];
             item.UseItem(target.EquippedMonster);
-            
+
             EvaluateState();
         }
 

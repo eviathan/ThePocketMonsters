@@ -7,7 +7,7 @@ namespace PocketMonsters.Core.Models
         public MonsterStats BaseStats { get; set; }
         public string Description { get; set; }
         public HashSet<ElementType> Elements { get; set; } = [];
-        public List<Move> BaseMoveSet { get; set; } = [];
+        public List<MoveType> BaseMoveSet { get; set; } = [];
         public Dictionary<byte, MonsterType> Evolutions { get; set; } = [];
     }
 
@@ -54,7 +54,7 @@ namespace PocketMonsters.Core.Models
                     ],
                     BaseMoveSet =
                     [
-                        Move.Moves[MoveType.WoodHammer]
+                        MoveType.WoodHammer
                     ]
                 }
             },
@@ -80,7 +80,7 @@ namespace PocketMonsters.Core.Models
                     ],
                     BaseMoveSet =
                     [
-                        Move.Moves[MoveType.FagBurn]
+                        MoveType.FagBurn
                     ]
                 }
             },

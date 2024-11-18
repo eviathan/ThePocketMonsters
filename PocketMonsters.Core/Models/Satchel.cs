@@ -14,11 +14,13 @@ namespace PocketMonsters.Core.Models
                 .ToHashSet();
         }
 
-        public bool TryUse(ItemType itemType, int amount = 1)
+        public bool TryUse(ItemType itemType, Monster target, int amount = 1)
         {
             // TODO: Handle amount 
             if (_items.ContainsKey(itemType) && _items[itemType] > 0)
             {
+                var item = Catalog.Instance[itemType];
+                item.UseItem(target);
                 _items[itemType]--;
             }
 

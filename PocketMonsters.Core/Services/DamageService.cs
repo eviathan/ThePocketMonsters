@@ -9,7 +9,7 @@ namespace PocketMonsters.Core.Service
         {
             var attackingMonster = attacker.EquippedMonster;
             var defendingMonster = defender.EquippedMonster;
-            var move = Move.Moves[moveType];
+            var move = MoveScroll.Instance[moveType];
 
             ApplyModifiers(attackingMonster);
             ApplyModifiers(defendingMonster);
