@@ -49,8 +49,8 @@ namespace PocketMonsters.Core.Models
         public void UseItem(Character target, Func<IEnumerable<ItemType>, ItemType> predicate)
         {
             var itemType = predicate(CurrentCharacter.Satchel.GetAvaliableItemTypes() ?? []);
-            var item = Catalog.Instance[itemType];
-            item.UseItem(target.EquippedMonster);
+            var item = ItemCatalog.Instance[itemType];
+            item.UseItem(CurrentCharacter, target);
 
             EvaluateState();
         }

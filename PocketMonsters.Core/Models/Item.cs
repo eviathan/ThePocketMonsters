@@ -6,6 +6,6 @@ namespace PocketMonsters.Core.Models
     {
         public ItemType Type { get; set; }
         public ItemCategory Category { get; set; }
-        public Action<Monster> UseItem { get; set; }
+        public Action<Character, Character> UseItem { get; set; }
     }
 }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocketMonsters.App", "Pocke
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocketMonsters.Core", "PocketMonsters.Core\PocketMonsters.Core.csproj", "{A00E9C3B-A7D3-413B-8095-AE4563B9DB14}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocketMonsters.DataAccess", "PocketMonsters.DataAccess\PocketMonsters.DataAccess.csproj", "{E349262B-6B57-4264-BAD2-4058CC15EC54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{A00E9C3B-A7D3-413B-8095-AE4563B9DB14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A00E9C3B-A7D3-413B-8095-AE4563B9DB14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A00E9C3B-A7D3-413B-8095-AE4563B9DB14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E349262B-6B57-4264-BAD2-4058CC15EC54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E349262B-6B57-4264-BAD2-4058CC15EC54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E349262B-6B57-4264-BAD2-4058CC15EC54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E349262B-6B57-4264-BAD2-4058CC15EC54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

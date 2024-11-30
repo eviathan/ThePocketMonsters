@@ -4,6 +4,7 @@ namespace PocketMonsters.Core.Enums
     {
         Potion,
         RareCandy,
-        BookTheOldDickTwist
+        BookTheOldDickTwist,
+        MegaBeastOrb
     }
 }

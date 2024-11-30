@@ -7,11 +7,16 @@ namespace PocketMonsters.Core.Models
     {
         public string Name { get; protected set; }
 
-        public Monster EquippedMonster { get; private set; }
+        public Monster EquippedMonster { get; set; }
 
         public List<Monster> Monsters { get; set; } = [];
 
-        public Satchel Satchel { get; set; } = new ();
+        public Satchel Satchel { get; set; }
+
+        public Character()
+        {
+            Satchel = new(this);    
+        }
  
         public bool TrySwapMonster(MonsterType monsterType)
         {

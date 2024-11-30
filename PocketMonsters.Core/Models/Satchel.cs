@@ -4,7 +4,13 @@ namespace PocketMonsters.Core.Models
 {
     public class Satchel
     {
+        private readonly Character _character;
         private Dictionary<ItemType, int> _items { get; set; } = [];
+
+        public Satchel(Character character)
+        {
+            _character = character ?? throw new ArgumentNullException(nameof(character));
+        }
 
         public HashSet<ItemType> GetAvaliableItemTypes()
         {
@@ -14,13 +20,13 @@ namespace PocketMonsters.Core.Models
                 .ToHashSet();
         }
 
-        public bool TryUse(ItemType itemType, Monster target, int amount = 1)
+        public bool TryUse(ItemType itemType, Character target, int amount = 1)
         {
             // TODO: Handle amount 
             if (_items.ContainsKey(itemType) && _items[itemType] > 0)
             {
-                var item = Catalog.Instance[itemType];
-                item.UseItem(target);
+                var item = ItemCatalog.Instance[itemType];
+                item.UseItem(_character, target);
                 _items[itemType]--;
             }
 

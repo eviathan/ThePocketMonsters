@@ -1,0 +1,1 @@
+Create tree/ hierarchy of monster user and other objects so that we can traverse it in both directions when necessary as passing the references into ever function and method needlessly is getting Ug Lee!

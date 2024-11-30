@@ -2,8 +2,8 @@ namespace PocketMonsters.Core.Enums
 {
     public enum MoveType
     {
-        FagBurn,
-        WoodHammer,
-        TheOldDickTwist
+        FagBurn = 1,
+        WoodHammer = 2,
+        TheOldDickTwist = 3
     }
 }

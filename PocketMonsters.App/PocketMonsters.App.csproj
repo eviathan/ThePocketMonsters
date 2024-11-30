@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PocketMonsters.Core\PocketMonsters.Core.csproj" />
+    <ProjectReference Include="..\PocketMonsters.DataAccess\PocketMonsters.DataAccess.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
